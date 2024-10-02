@@ -5,8 +5,12 @@ from selenium.webdriver.support.ui import WebDriverWait  # Utilizado para espera
 from selenium.webdriver.support import expected_conditions as EC  # Define condições que serão esperadas no WebDriverWait
 import streamlit as st  # Framework para criar aplicações web simples e interativas
 import tempfile  # Para criar arquivos temporários para armazenar credenciais de forma transitória
+import chromedriver_autoinstaller # Instala cajo não haja o driver do Chrome
 import time  # Permite controlar o tempo de execução (e.g., atrasos com sleep)
 import os  # Fornece funções para interagir com o sistema operacional
+
+# Instala automaticamente a versão correta do chromedriver
+chromedriver_autoinstaller.install()
 
 # Inicialize a chave 'temp_file_path' no session_state se ainda não existir
 if 'temp_file_path' not in st.session_state:
