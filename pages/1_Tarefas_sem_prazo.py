@@ -3,13 +3,10 @@ from selenium import webdriver as opcoesSelenium  # Importa o módulo Selenium p
 from selenium.webdriver.common.by import By  # Permite localizar elementos na página usando diferentes métodos (e.g., XPATH, ID)
 from selenium.webdriver.support.ui import WebDriverWait  # Utilizado para esperar elementos na página
 from selenium.webdriver.support import expected_conditions as EC  # Define condições que serão esperadas no WebDriverWait
-from selenium.webdriver.firefox.options import Options
 import streamlit as st  # Framework para criar aplicações web simples e interativas
 import tempfile  # Para criar arquivos temporários para armazenar credenciais de forma transitória
-import geckodriver_autoinstaller # Instala caso não haja o driver do Firefox
 import time  # Permite controlar o tempo de execução (e.g., atrasos com sleep)
 import os  # Fornece funções para interagir com o sistema operacional
-
 
 # Inicialize a chave 'temp_file_path' no session_state se ainda não existir
 if 'temp_file_path' not in st.session_state:
@@ -58,11 +55,11 @@ def carregar_selenium():
     Carrega o navegador Chrome com as configurações necessárias para rodar em segundo plano.
     :return: Instância do navegador Chrome.
     """
-    options = Options()
-    options.add_argument('--headless')  # Roda o navegador em modo headless (sem interface gráfica)
-    options.add_argument('--no-sandbox')  # Desativa o sandbox do navegador
-    options.add_argument('--disable-dev-shm-usage')  # Desativa o uso excessivo de memória compartilhada
-    navegador = opcoesSelenium.Firefox(options=options)
+    chrome_options = opcoesSelenium.ChromeOptions()
+    chrome_options.add_argument('--headless')  # Roda o navegador em modo headless (sem interface gráfica)
+    chrome_options.add_argument('--no-sandbox')  # Desativa o sandbox do navegador
+    chrome_options.add_argument('--disable-dev-shm-usage')  # Desativa o uso excessivo de memória compartilhada
+    navegador = opcoesSelenium.Chrome(options=chrome_options)
     return navegador
 
 # Função de login que tenta autenticar e, se falhar, retorna ao fluxo de entrada de dados
@@ -178,8 +175,6 @@ def login(documento, password):
     return True  # Indica que o login foi bem-sucedido
 
 if __name__ == '__main__':
-    # Instala automaticamente a versão correta do chromedriver
-    geckodriver_autoinstaller.install()
     # Interface do Streamlit para capturar o login e senha
     st.title("Removedor de prazos do Tarefas SP")
     
@@ -209,4 +204,5 @@ if __name__ == '__main__':
         # Se o login falhar, mostre uma mensagem para o usuário tentar novamente
         if not login_sucesso:
             st.warning("Tente novamente digitando suas credenciais corretamente.")
+
 
