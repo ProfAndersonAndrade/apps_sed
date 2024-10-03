@@ -1,4 +1,6 @@
 # Importações necessárias
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium import webdriver as opcoesSelenium  # Importa o módulo Selenium para automação do navegador
 from selenium.webdriver.common.by import By  # Permite localizar elementos na página usando diferentes métodos (e.g., XPATH, ID)
 from selenium.webdriver.support.ui import WebDriverWait  # Utilizado para esperar elementos na página
@@ -55,11 +57,17 @@ def carregar_selenium():
     Carrega o navegador Chrome com as configurações necessárias para rodar em segundo plano.
     :return: Instância do navegador Chrome.
     """
-    chrome_options = opcoesSelenium.ChromeOptions()
+    # Defina o caminho do chromedriver
+    chromedriver_path = '/home/appuser/.cache/selenium/chromedriver/linux64/129.0.6668.89/chromedriver'
+
+    chrome_options = Options()
     chrome_options.add_argument('--headless')  # Roda o navegador em modo headless (sem interface gráfica)
     chrome_options.add_argument('--no-sandbox')  # Desativa o sandbox do navegador
     chrome_options.add_argument('--disable-dev-shm-usage')  # Desativa o uso excessivo de memória compartilhada
     navegador = opcoesSelenium.Chrome(options=chrome_options)
+    # Utilize o caminho explicitamente no Service
+    service = Service(chromedriver_path)
+    driver = opcoesSelenium.Chrome(service=service, options=chrome_options)
     return navegador
 
 # Função de login que tenta autenticar e, se falhar, retorna ao fluxo de entrada de dados
