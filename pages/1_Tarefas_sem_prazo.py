@@ -1,4 +1,5 @@
 # Importações necessárias
+import chromedriver_autoinstaller
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver as opcoesSelenium  # Importa o módulo Selenium para automação do navegador
